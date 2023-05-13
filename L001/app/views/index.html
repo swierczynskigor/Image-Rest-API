@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <select id="name">
+      <option value="krowa">krowa</option>
+      <option value="kot">kot</option>
+      <option value="pies">pies</option>
+    </select>
+    <select id="color">
+      <option value="czarny">czarny</option>
+      <option value="biały">biały</option>
+      <option value="pomarańczowy">pomarańczowy</option>
+    </select>
+    <button id="add">Add</button>
+    <button id="getAll">Get all</button>
+    <button id="delete">Delete</button>
+    <button id="update">Update</button>
+    <h2>Utworzone zwierzeta</h2>
+    <select id="created"></select>
+  </body>
+  <script>
+    let animals = [];
+    const nameBox = document.getElementById("name");
+    const colorBox = document.getElementById("color");
+    const createdBox = document.getElementById("created");
+
+    document.getElementById("add").addEventListener("click", () => {
+      add();
+    });
+
+    const add = () => {
+      const body = JSON.stringify({
+        name: nameBox.value,
+        color: colorBox.value,
+      });
+      console.log(body);
+      fetch("/add", { method: "POST", body })
+        .then((res) => res.json())
+        .then((data) => {
+          createdBox.innerHTML = data.map(
+            (animal) =>
+              `<option value='${animal.id}'>${animal.name} - ${animal.color}</option>`
+          );
+        });
+    };
+  </script>
+</html>

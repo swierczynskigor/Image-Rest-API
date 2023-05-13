@@ -1,0 +1,13 @@
+export interface ImageRequestI {
+  id: string;
+  album: string;
+  originalName: string;
+  url: string;
+  lastChange: string;
+  history: HistoryI[];
+}
+
+export interface HistoryI {
+  status: string;
+  timeStamp: Date | string | number;
+}
