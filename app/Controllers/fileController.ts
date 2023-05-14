@@ -3,41 +3,21 @@ import path from "path";
 import * as fs from "fs";
 import formidable from "formidable";
 import { rejects } from "assert";
+import { SavedImageI } from "../types";
+import { overritePhotosArray, photosArray } from "../Data";
 
 export const fileController = {
   saveFile: (request: IncomingMessage) => {
-    let filePath: string | string[] = path.dirname(__dirname).split("/");
-    filePath.slice(-2);
-    filePath = filePath.join("/");
-    let toReturn: string[];
-    console.log(filePath);
     const form = formidable({
       multiples: true,
       keepExtensions: true,
     });
-    // form.parse(request, function (err: any, fields: any, files: any) {
-    //   if (err) {
-    //     console.error(err);
-    //     return "ERROR";
-    //   }
-    //   // Create a new directory with a unique name based on the current timestamp
-    //   const dirPath = filePath + "/uploads/" + fields.album;
-    //   if (!fs.existsSync(dirPath)) {
-    //     fs.mkdirSync(dirPath, { recursive: true });
-    //   }
-
-    //   // Move the uploaded file to the new directory
-    //   const imgName: string = files.file.path.split("/").slice(-1)[0];
-    //   const oldPath = files.file.path;
-    //   const newPath = path.join(dirPath, imgName);
-    //   fs.renameSync(oldPath, newPath);
-
-    //   console.log("Image saved to:", newPath);
-    //   return newPath.split("/").slice(-3);
-    // });
 
     return new Promise(
-      (resolve: (value: unknown) => void, reject: (reason?: any) => void) => {
+      (
+        resolve: (value: SavedImageI) => void,
+        reject: (reason?: any) => void
+      ) => {
         form.parse(request, (err: any, fields: any, files: any) => {
           //create album if it doesn't exists
           let dir = "./app/uploads/" + fields.album;
@@ -75,9 +55,19 @@ export const fileController = {
       }
     );
   },
-  add: (name: string, color: string) => {},
-  delete: (id: string) => {
-    // usuwanie po id z animalsArray
+  delete: (id: number) => {
+    // usuwanie po id z photosArray
+    const toDel = photosArray.find((photo) => photo.id === id);
+    if (toDel) {
+      overritePhotosArray(photosArray.filter((photo) => photo.id !== id));
+      fs.unlink(toDel.url, (err) => {
+        if (err) throw err;
+      });
+      return "file deleted successfuly";
+    } else {
+      return "this file doesn't exists";
+    }
+    return "XD?";
   },
   update: (id: string) => {
     // update po id elementu animalsArray

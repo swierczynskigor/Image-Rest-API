@@ -16,7 +16,7 @@ GET http://localhost:5000/api/photos/1 HTTP/1.1
 
 
 ### DELETE - usuń wg id
-DELETE http://localhost:5000/api/photos/1 HTTP/1.1
+DELETE http://localhost:5000/api/photos/1684094306037 HTTP/1.1
 
 
 ### PATCH - updatuj wg id
@@ -44,4 +44,9 @@ Content-Disposition: form-data; name="album"
 Content-Type: text/plain
 
 album1
+------FormBoundary1234
+Content-Disposition: form-data; name="description"
+Content-Type: text/plain
+
+basicDesc
 ------FormBoundary1234

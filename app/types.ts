@@ -11,3 +11,11 @@ export interface HistoryI {
   status: string;
   timeStamp: Date | string | number;
 }
+
+export interface SavedImageI {
+  id: number;
+  album: string;
+  originalName: string;
+  url: string;
+  description: string;
+}

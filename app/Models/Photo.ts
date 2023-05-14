@@ -16,7 +16,7 @@ export class Photo {
     url: string,
     description: string
   ) {
-    this.id = new Date().getTime();
+    this.id = id;
     this.album = album;
     this.originalName = originalName;
     this.url = url;
