@@ -43,5 +43,5 @@ Content-Type: image/jpeg
 Content-Disposition: form-data; name="album"
 Content-Type: text/plain
 
-album123
+album1
 ------FormBoundary1234

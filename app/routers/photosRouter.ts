@@ -1,12 +1,11 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { getRequestData } from "./getRequestData";
-import { fileController } from "./Controllers";
+import { getRequestData } from "../getRequestData";
+import { fileController } from "../Controllers";
 import { readFile } from "fs";
 import FormData from "form-data";
-import { ImageRequestI } from "./types";
 const path = "./app/views/";
 
-export const router = async (
+export const photosRouter = async (
   request: IncomingMessage,
   response: ServerResponse
 ) => {
@@ -19,8 +18,8 @@ export const router = async (
         response.end("XDDDDD");
       }
 
-    // strona views/index.html
-
+      // strona views/index.html
+      break;
     case "POST":
       if (request.url.match("api/photos")) {
         // let data: any = await getRequestData(request);
@@ -28,7 +27,7 @@ export const router = async (
         console.log("XD", path);
         response.writeHead(200, { "content-type": "text/plain" });
         response.write("Received image:\n\n" + path);
-        response.end();
+        response.end(new Image());
       }
       break;
     case "DELETE":
@@ -36,6 +35,6 @@ export const router = async (
       }
       break;
     case "PATCH":
-      if (request.url == "/api/photos") break;
+      if (request.url.match(/\/api\/photos\/([0-9]+)/)) break;
   }
 };
