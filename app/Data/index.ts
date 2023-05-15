@@ -3,19 +3,20 @@ import { User } from "../Models/User";
 
 export let photosArray: Photo[] = [
   {
-    id: 1684094306037,
+    id: 1684137205820,
     album: "album1",
     originalName: "input.jpg",
-    url: "./app/uploads/album1/upload_c29e69bfa50f7b17bd7c656fac8d2eb0.jpg",
+    url: "./app/uploads/album1/upload_fcd315f9d17b51b4a11fa300348ec6e5.jpg",
     description: "basicDesc",
     lastChagne: "original",
     history: [
       {
         status: "original",
-        timestamp: 1684094306040,
+        timestamp: 1684137205826,
       },
     ],
     tags: [],
+    extension: "jpg",
   },
 ];
 

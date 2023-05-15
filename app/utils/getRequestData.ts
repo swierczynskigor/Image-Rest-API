@@ -11,7 +11,7 @@ export const getRequestData = async (req: IncomingMessage) => {
 
       req.on("end", () => {
         // mamy dane i zwracamy z promisy
-        resolve(JSON.parse(body));
+        resolve(JSON.parse(JSON.stringify(body)));
       });
     } catch (error) {
       reject(error);

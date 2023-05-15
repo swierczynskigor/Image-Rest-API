@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { getRequestData } from "../getRequestData";
+import { getRequestData } from "../utils/getRequestData";
 import { fileController } from "../Controllers";
 import { readFile } from "fs";
 import FormData from "form-data";

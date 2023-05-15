@@ -1,12 +1,36 @@
-import { IncomingMessage } from "http";
-import path from "path";
+import { IncomingMessage, ServerResponse } from "http";
 import * as fs from "fs";
 import formidable from "formidable";
-import { rejects } from "assert";
 import { SavedImageI } from "../types";
 import { overritePhotosArray, photosArray } from "../Data";
+import { fileOperations } from "../utils";
 
 export const fileController = {
+  returFile: (id: number, response: ServerResponse) => {
+    const file = photosArray.find((photo) => photo.id === id);
+    if (file) {
+      const filePath = file.url;
+      const stat = fs.statSync(filePath);
+
+      if (file.extension === "mp4")
+        response.writeHead(200, {
+          "Content-Type": "video/" + file.extension,
+          "Content-Length": stat.size,
+        });
+      else
+        response.writeHead(200, {
+          "Content-Type": "image/" + file.extension,
+          "Content-Length": stat.size,
+        });
+
+      fs.readFile(filePath, function (err, content) {
+        // Serving the image
+        response.end(content);
+      });
+    } else {
+      response.end("404");
+    }
+  },
   saveFile: (request: IncomingMessage) => {
     const form = formidable({
       multiples: true,
@@ -25,14 +49,13 @@ export const fileController = {
 
           //save file
           const file = files.file;
-
           try {
-            let newFileName = file.path.split("\\");
-            newFileName = newFileName[newFileName.length - 1];
+            let splitedFilePath: string[] = [];
+            if (file.path.includes("/")) splitedFilePath = file.path.split("/");
+            else splitedFilePath = file.path.split("\\");
 
+            const newFileName = splitedFilePath[splitedFilePath.length - 1];
             let newPath = `${dir}/${newFileName}`;
-
-            console.log(newPath);
 
             fs.writeFile(newPath, fs.readFileSync(file.path), function (err) {
               if (err) {
@@ -45,6 +68,7 @@ export const fileController = {
                 originalName: file.name,
                 url: newPath,
                 description: fields.description ? fields.description : "",
+                extension: newFileName.split(".")[1],
               });
             });
           } catch (error) {
@@ -67,10 +91,26 @@ export const fileController = {
     } else {
       return "this file doesn't exists";
     }
-    return "XD?";
   },
-  update: (id: string) => {
-    // update po id elementu animalsArray
+  update: (body: any) => {
+    const file = photosArray.find((photo) => photo.id === body.id);
+    if (file) {
+      fileOperations.patch(file, body);
+    }
+    console.log(file);
+
+    return file;
   },
-  getall: () => {},
+  getAll: (response: ServerResponse) => {
+    response.writeHead(200, {
+      "Content-Type": "application/json",
+    });
+    response.end(
+      JSON.stringify(
+        photosArray.map((photo) => photo.id),
+        null,
+        5
+      )
+    );
+  },
 };

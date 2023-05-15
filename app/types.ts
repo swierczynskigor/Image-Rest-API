@@ -18,4 +18,5 @@ export interface SavedImageI {
   originalName: string;
   url: string;
   description: string;
+  extension: string;
 }

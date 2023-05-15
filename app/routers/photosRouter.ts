@@ -1,11 +1,8 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { getRequestData } from "../getRequestData";
 import { fileController } from "../Controllers";
-import { readFile } from "fs";
-import FormData from "form-data";
 import { Photo } from "../Models/Photo";
 import { SavedImageI } from "../types";
-const path = "./app/views/";
+import { getId, getRequestData } from "../utils";
 
 export const photosRouter = async (
   request: IncomingMessage,
@@ -15,12 +12,10 @@ export const photosRouter = async (
   switch (request.method) {
     case "GET":
       if (request.url.match(/\/api\/photos\/([0-9]+)/)) {
-        response.end("XD");
+        fileController.returFile(getId(request.url), response);
       } else if (request.url === "/api/photos") {
-        response.end("XDDDDD");
+        fileController.getAll(response);
       }
-
-      // strona views/index.html
       break;
     case "POST":
       if (request.url.match("api/photos")) {
@@ -33,7 +28,8 @@ export const photosRouter = async (
               image.album,
               image.originalName,
               image.url,
-              image.description
+              image.description,
+              image.extension
             ),
             null,
             5
@@ -43,14 +39,23 @@ export const photosRouter = async (
       break;
     case "DELETE":
       if (request.url.match(/\/api\/photos\/([0-9]+)/)) {
-        const slicedUrl = request.url.split("/");
-        const res = await fileController.delete(
-          Number(slicedUrl[slicedUrl.length - 1])
-        );
+        const res = await fileController.delete(getId(request.url));
         response.end(res);
       }
       break;
     case "PATCH":
-      if (request.url.match(/\/api\/photos\/([0-9]+)/)) break;
+      if (request.url.match("api/photos")) {
+        response.writeHead(200, {
+          "Content-type": "application/json",
+        });
+        response.end(
+          JSON.stringify(
+            fileController.update(await getRequestData(request)),
+            null,
+            5
+          )
+        );
+      }
+      break;
   }
 };

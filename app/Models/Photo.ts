@@ -9,12 +9,14 @@ export class Photo {
   lastChagne: string;
   history: { status: string; timestamp: number; url?: string }[];
   tags: any[];
+  extension: string;
   constructor(
     id: number,
     album: string,
     originalName: string,
     url: string,
-    description: string
+    description: string,
+    extension: string
   ) {
     this.id = id;
     this.album = album;
@@ -25,6 +27,7 @@ export class Photo {
       (this.history = [
         { status: "original", timestamp: new Date().getTime() },
       ]);
+    this.extension = extension;
     this.tags = [];
     photosArray.push(this);
   }
