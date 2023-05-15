@@ -97,7 +97,6 @@ export const fileController = {
     if (file) {
       fileOperations.patch(file, body);
     }
-    console.log(file);
 
     return file;
   },

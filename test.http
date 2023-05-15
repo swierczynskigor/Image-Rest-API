@@ -24,8 +24,8 @@ PATCH  http://localhost:5000/api/photos HTTP/1.1
 content-type: application/json
 
 {
- "id": 1684137205820,
- "status": "crop",
+ "id": 1684176920897,
+ "status": "crop"
 }
 ###
 

@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage } from "http";
 
 export const getRequestData = async (req: IncomingMessage) => {
   return new Promise((resolve, reject) => {
@@ -11,11 +11,10 @@ export const getRequestData = async (req: IncomingMessage) => {
 
       req.on("end", () => {
         // mamy dane i zwracamy z promisy
-        resolve(JSON.parse(JSON.stringify(body)));
+        resolve(JSON.parse(body));
       });
     } catch (error) {
       reject(error);
     }
   });
 };
-module.exports = { getRequestData };
