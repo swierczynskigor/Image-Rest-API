@@ -1,4 +1,5 @@
 import { Photo } from "../Models/Photo";
+import { Tag } from "../Models/Tag";
 import { User } from "../Models/User";
 
 export let photosArray: Photo[] = [
@@ -19,6 +20,8 @@ export let photosArray: Photo[] = [
     tags: [],
   },
 ];
+
+export const tagsArray: Tag[] = [];
 
 export const overritePhotosArray = (newArr: Photo[]) => (photosArray = newArr);
 
