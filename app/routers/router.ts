@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { photosRouter } from "./photosRouter";
 import { tagsRouter } from "./tagsRouter";
+import { usersRouter } from "./userRouter";
 
 export const router = async (
   request: IncomingMessage,
@@ -13,5 +14,8 @@ export const router = async (
   // tags router
   else if (request.url && request.url.search("/api/tags") != -1) {
     await tagsRouter(request, response);
+  } //users router
+  else if (request.url && request.url.search("/api/user") != -1) {
+    await usersRouter(request, response);
   }
 };

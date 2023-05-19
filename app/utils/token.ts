@@ -1,22 +1,22 @@
 import * as jwt from "jsonwebtoken";
+require("dotenv").config();
 
 export const createToken = async () => {
-  let token = await jwt.sign(
+  return await jwt.sign(
     {
       email: "aaa@test.com",
       login: "isw0",
     },
-    process.env.APP_PORT || "tget", // powinno być w .env
+    process.env.APP_PORT || "nasjkdfb", // powinno być w .env
     {
-      expiresIn: "365d", // "1m", "1d", "24h"
+      expiresIn: "1d", // "1m", "1d", "24h"
     }
   );
-  console.log({ token: token });
 };
 
 export const verifyToken = async (token: string) => {
   try {
-    let decoded = await jwt.verify(token, "verysecretkey");
+    let decoded = await jwt.verify(token, process.env.APP_PORT || "nasjkdfb");
     console.log({ decoded: decoded });
   } catch (ex: any) {
     console.log({ message: ex.message });
