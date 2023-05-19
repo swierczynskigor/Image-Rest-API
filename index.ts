@@ -1,14 +1,16 @@
 import { createServer, IncomingMessage, ServerResponse } from "http";
 import { router } from "./app";
+require("dotenv").config();
 
-const port = 5000;
+import { createToken } from "./app";
 
 const server = createServer(
   (request: IncomingMessage, response: ServerResponse) => {
+    createToken();
     router(request, response);
   }
 );
 
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+server.listen(process.env.PORT, () => {
+  console.log(`Server listening on port ${process.env.PORT}`);
 });

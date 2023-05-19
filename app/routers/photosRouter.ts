@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { fileController } from "../Controllers";
+import { fileController, tagsController } from "../Controllers";
 import { Photo } from "../Models/Photo";
 import { SavedImageI } from "../types";
 import { getId, getRequestData } from "../utils";
@@ -44,7 +44,28 @@ export const photosRouter = async (
       }
       break;
     case "PATCH":
-      if (request.url.match("api/photos")) {
+      if (request.url.match("api/photos/tags/mass")) {
+        const data: any = await getRequestData(request);
+        response.writeHead(200, { "Content-Type": "application/json" });
+        console.log(data);
+        response.end(
+          JSON.stringify(
+            tagsController.addMassTagsToPhoto(data.id, data.tagsId),
+            null,
+            5
+          )
+        );
+      } else if (request.url.match("api/photos/tags")) {
+        const data: any = await getRequestData(request);
+        response.writeHead(200, { "Content-Type": "application/json" });
+        response.end(
+          JSON.stringify(
+            tagsController.addTagToPhoto(data.id, data.tagId),
+            null,
+            5
+          )
+        );
+      } else if (request.url === "/api/photos") {
         response.writeHead(200, {
           "Content-type": "application/json",
         });

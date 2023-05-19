@@ -6,7 +6,7 @@ export const tagsController = {
     name = [...name][0] === "#" ? name : "#" + name;
     if (!tagsArray.find((tag) => tag.name === name)) {
       const id =
-        tagsArray.length > 1 ? tagsArray[tagsArray.length - 1].id + 1 : 0;
+        tagsArray.length > 0 ? tagsArray[tagsArray.length - 1].id + 1 : 0;
       const newTag = new Tag(id, name);
       tagsArray.push(newTag);
       return newTag;
@@ -32,7 +32,16 @@ export const tagsController = {
     const file = photosArray.find((file) => file.id === id);
     if (tag && file) {
       file.tags.push(tag);
+      return file;
     } else return "404";
   },
-  addMassTagsToPhoto: (id: number, tagsId: number[]) => {},
+  addMassTagsToPhoto: (id: number, tagsId: number[]) => {
+    const tags = tagsArray.filter((tag) => tagsId.includes(tag.id));
+    const file = photosArray.find((file) => file.id === id);
+    console.log(tags, file);
+    if (tags && file) {
+      file.tags = file.tags.concat([...tags]);
+      return file;
+    }
+  },
 };

@@ -25,7 +25,6 @@ export const tagsRouter = async (
     case "POST":
       if (request.url.match("api/tags")) {
         const data = await getRequestData(request);
-
         response.writeHead(200, { "Content-Type": "application/json" });
 
         response.end(
@@ -38,18 +37,9 @@ export const tagsRouter = async (
     case "DELETE":
       break;
     case "PATCH":
-      if (request.url.match("api/photos/tags")) {
-        const data: any = await getRequestData(request);
-        response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(
-          JSON.stringify(
-            tagsController.addTagToPhoto(data.id, data.tagId),
-            null,
-            5
-          )
-        );
-      } else if (request.url.match("api/tags/tags/mass")) {
-      }
+      break;
+    default:
+      console.log("default");
       break;
   }
 };
