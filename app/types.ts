@@ -20,3 +20,9 @@ export interface SavedImageI {
   description: string;
   extension: string;
 }
+
+export interface RegisterUsetDataI {
+  name: string;
+  email: string;
+  password: string;
+}

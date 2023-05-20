@@ -1,5 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { getId, getRequestData } from "../utils";
+import { getDataFromUrl, getRequestData, verifyToken } from "../utils";
+import { userController } from "../Controllers";
+import { usersArray } from "../Data";
 
 export const usersRouter = async (
   request: IncomingMessage,
@@ -8,22 +10,53 @@ export const usersRouter = async (
   if (request.url === undefined) return;
   switch (request.method) {
     case "GET":
-      if (
-        request.url.search(/\/api\/user\/confirm\/(^[\w-]*\.[\w-]*\.[\w-]*$)/)
-      ) {
-        console.log(request.url);
+      if (request.url.match(/\/api\/user\/confirm\/(.*?)/)) {
+        const token = verifyToken(getDataFromUrl(request.url));
 
-        const token = getId(request.url);
-
+        const userToConfirm: any = await token.then((data) => {
+          return data;
+        });
+        console.log(userToConfirm.email, userToConfirm.name);
+        usersArray
+          .find(
+            (user) =>
+              user.email === userToConfirm.email &&
+              user.name === userToConfirm.name
+          )
+          ?.verify();
         response.writeHead(200, {
           "Content-Type": "text/plain",
         });
-        response.end(token);
+        response.end("Confimation completed");
+      } else if (request.url === "/api/user") {
+        response.writeHead(200, {
+          "Content-Type": "text/plain",
+        });
+        response.end(JSON.stringify(usersArray, null, 5));
       }
       break;
 
     case "POST":
       if (request.url.match("/api/user/register")) {
+        const data: any = await getRequestData(request);
+
+        response.writeHead(200, { "Content-Type": "application/json" });
+        const res = await userController.register(data);
+        if (res.includes("taken")) response.end(res);
+        else
+          response.end(
+            "http://localhost:" +
+              (process.env.PORT || 5000) +
+              "/api/user/confirm/" +
+              res
+          );
+      } else if (request.url.match("/api/user/login")) {
+        const data: any = await getRequestData(request);
+
+        response.writeHead(200, { "Content-Type": "application/json" });
+        const res: any = await userController.login(data);
+        if (res.includes("wrong")) response.end(res);
+        else response.end("logged succesfully");
       }
       break;
     case "DELETE":

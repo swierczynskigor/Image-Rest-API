@@ -1,10 +1,32 @@
-####
+###
 
+GET http://localhost:5000/api/user HTTP/1.1
+
+###
 POST http://localhost:5000/api/user/login HTTP/1.1
 authorization: Bearer eyJhbG.eyJlbWFpbCII6MTY1MjI4NjgzN30.xkXNNho-MxECZsJXCIU
 
-#####
+###
 
-GET http://localhost:5000/api/user/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhYUB0ZXN0LmNvbSIsImxvZ2luIjoiaXN3MCIsImlhdCI6MTY4NDQ5MDM2NCwiZXhwIjoxNzE-2MDI_2MzY0fQ.b17AZf22Ah2WXqMHxugKd7WvNLsMEig9e3tTt1bZPyg HTTP/1.1
+GET http://localhost:5000/api/user/confirm/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWVAZW1haWwucGwiLCJsb2dpbiI6Im5hbWUiLCJpYXQiOjE2ODQ1MTU5ODAsImV4cCI6MTY4NDYwMjM4MH0.V92xOTjx9RLOhVlqzdSEGT_JX_JEKe5Qms71hk3UV3g HTTP/1.1
 
 ###
+
+POST http://localhost:5000/api/user/register HTTP/1.1
+content-type: application/json
+
+{    
+   "name": "namee",
+   "email":"namwe@email.pl",
+   "password":"password"
+}
+
+####
+
+POST http://localhost:5000/api/user/login HTTP/1.1
+content-type: application/json
+
+{    
+   "email":"name@email.pl",
+   "password":"password"
+}

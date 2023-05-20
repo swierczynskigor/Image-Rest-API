@@ -1,11 +1,12 @@
 import * as jwt from "jsonwebtoken";
+import { User } from "../Models/User";
 require("dotenv").config();
 
-export const createToken = async () => {
+export const createToken = async (user: User) => {
   return await jwt.sign(
     {
-      email: "aaa@test.com",
-      login: "isw0",
+      email: user.email,
+      name: user.name,
     },
     process.env.APP_PORT || "nasjkdfb", // powinno być w .env
     {
@@ -16,8 +17,7 @@ export const createToken = async () => {
 
 export const verifyToken = async (token: string) => {
   try {
-    let decoded = await jwt.verify(token, process.env.APP_PORT || "nasjkdfb");
-    console.log({ decoded: decoded });
+    return await jwt.verify(token, process.env.APP_PORT || "nasjkdfb");
   } catch (ex: any) {
     console.log({ message: ex.message });
   }
