@@ -29,6 +29,6 @@ new User(
   0,
   "name",
   "name@email.pl",
-  false,
+  true,
   "8-$2b$08$zgpw9B.Txe3rzCT1BCWZHugw9AwvW4XVfoPN0ZZBuK4w.PDzjkTzG"
 );

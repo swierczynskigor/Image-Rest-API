@@ -51,12 +51,8 @@ export const usersRouter = async (
               res
           );
       } else if (request.url.match("/api/user/login")) {
-        const data: any = await getRequestData(request);
-
         response.writeHead(200, { "Content-Type": "application/json" });
-        const res: any = await userController.login(data);
-        if (res.includes("wrong")) response.end(res);
-        else response.end("logged succesfully");
+        response.end(await userController.login(request));
       }
       break;
     case "DELETE":
