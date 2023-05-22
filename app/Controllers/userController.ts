@@ -9,7 +9,6 @@ import {
   getRequestData,
   verifyToken,
 } from "../utils";
-import { rejects } from "assert";
 
 export const userController = {
   register: async (userData: RegisterUsetDataI) => {
@@ -29,12 +28,22 @@ export const userController = {
   login: async (request: IncomingMessage) => {
     return new Promise(async (resolve, reject) => {
       const userData: any = await getRequestData(request);
-      const user = usersArray.find((user) => user.email === userData.email);
-      if (!user) resolve("wrong email");
+      const user = usersArray.find(
+        (user) => user.email === userData.name || user.name === userData.name
+      );
+      if (!user) resolve({ isSuccess: false });
       else {
         if (await decryptPassword(userData.password, user.password))
-          resolve(user.confimred ? createToken(user) : "confirm your account");
-        else resolve("wrong password");
+          resolve(
+            user.confimred
+              ? {
+                  token: await createToken(user),
+                  name: user.name,
+                  success: true,
+                }
+              : "confirm your account"
+          );
+        else resolve({ success: false });
       }
     });
   },

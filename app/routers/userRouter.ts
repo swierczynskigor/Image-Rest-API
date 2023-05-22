@@ -16,7 +16,7 @@ export const usersRouter = async (
         const userToConfirm: any = await token.then((data) => {
           return data;
         });
-        console.log(userToConfirm.email, userToConfirm.name);
+
         usersArray
           .find(
             (user) =>
@@ -42,17 +42,19 @@ export const usersRouter = async (
 
         response.writeHead(200, { "Content-Type": "application/json" });
         const res = await userController.register(data);
-        if (res.includes("taken")) response.end(res);
+        console.log(res);
+        if (res.includes("taken")) response.end(JSON.stringify({ token: res }));
         else
           response.end(
-            "http://localhost:" +
-              (process.env.PORT || 5000) +
-              "/api/user/confirm/" +
-              res
+            JSON.stringify({
+              token: "/api/user/confirm/" + res,
+            })
           );
       } else if (request.url.match("/api/user/login")) {
         response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(await userController.login(request));
+        response.end(
+          JSON.stringify(await userController.login(request), null, 5)
+        );
       } else if (request.url.match("/api/user/auth")) {
         response.writeHead(200, { "Content-Type": "application/json" });
         response.end(JSON.stringify(await userController.auth(request)));
