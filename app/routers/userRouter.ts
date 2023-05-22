@@ -1,5 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { getDataFromUrl, getRequestData, verifyToken } from "../utils";
+import {
+  getDataFromUrl,
+  getRequestData,
+  verifyHeaderToken,
+  verifyToken,
+} from "../utils";
 import { userController } from "../Controllers";
 import { usersArray } from "../Data";
 

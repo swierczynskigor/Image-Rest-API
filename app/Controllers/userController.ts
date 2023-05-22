@@ -7,7 +7,7 @@ import {
   decryptPassword,
   encryptPassword,
   getRequestData,
-  verifyToken,
+  verifyHeaderToken,
 } from "../utils";
 
 export const userController = {
@@ -49,16 +49,7 @@ export const userController = {
   },
   auth: async (request: IncomingMessage) => {
     return new Promise(async (resolve, reject) => {
-      if (
-        request.headers.authorization &&
-        request.headers.authorization.startsWith("Bearer")
-      ) {
-        const token = request.headers.authorization.split(" ")[1];
-        const decoded: any = await verifyToken(token);
-        if (decoded.name && decoded.email) resolve({ success: true });
-        resolve({ success: false });
-      }
-      resolve({ success: false });
+      resolve({ success: await verifyHeaderToken(request) });
     });
   },
 };
