@@ -62,7 +62,9 @@ export const usersRouter = async (
         );
       } else if (request.url.match("/api/user/auth")) {
         response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(JSON.stringify(await userController.auth(request)));
+        response.end(
+          JSON.stringify({ success: await userController.auth(request) })
+        );
       }
       break;
     case "DELETE":
