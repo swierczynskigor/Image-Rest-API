@@ -63,7 +63,7 @@ export const usersRouter = async (
       } else if (request.url.match("/api/user/auth")) {
         response.writeHead(200, { "Content-Type": "application/json" });
         response.end(
-          JSON.stringify({ success: await userController.auth(request) })
+          JSON.stringify({ success: await verifyHeaderToken(request) })
         );
       }
       break;

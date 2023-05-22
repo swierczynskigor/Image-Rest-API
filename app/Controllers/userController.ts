@@ -47,9 +47,4 @@ export const userController = {
       }
     });
   },
-  auth: async (request: IncomingMessage) => {
-    return new Promise(async (resolve, reject) => {
-      resolve({ success: await verifyHeaderToken(request) });
-    });
-  },
 };

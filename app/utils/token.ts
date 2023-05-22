@@ -27,8 +27,12 @@ export const verifyHeaderToken = async (request: IncomingMessage) => {
         token,
         process.env.APP_PORT || "nasjkdfb"
       );
-      console.log(decoded);
-      if (decoded.name && decoded.email) return true;
+      if (
+        decoded.name &&
+        decoded.email &&
+        new Date(decoded.exp * 1000) > new Date()
+      )
+        return true;
       else return false;
     }
   } catch (ex: any) {
