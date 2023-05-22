@@ -28,11 +28,12 @@ export const verifyHeaderToken = async (request: IncomingMessage) => {
         process.env.APP_PORT || "nasjkdfb"
       );
       console.log(decoded);
-      if (decoded.name && decoded.email) return true;
-      else false;
+      if (decoded.name && decoded.email) return { success: true };
+      else return { success: false };
     }
   } catch (ex: any) {
     console.log({ message: ex.message });
+    return { success: false };
   }
 };
 
