@@ -104,12 +104,6 @@ export const fileController = {
     response.writeHead(200, {
       "Content-Type": "application/json",
     });
-    response.end(
-      JSON.stringify(
-        photosArray.map((photo) => photo.id),
-        null,
-        5
-      )
-    );
+    response.end(JSON.stringify(photosArray, null, 5));
   },
 };
