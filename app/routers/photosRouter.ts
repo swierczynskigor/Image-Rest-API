@@ -20,7 +20,7 @@ export const photosRouter = async (
     case "POST":
       if (request.url.match("api/photos")) {
         const image: SavedImageI = await fileController.saveFile(request);
-        response.writeHead(200, { "content-type": "text/plain" });
+        response.writeHead(200, { "content-type": "application/json" });
         response.end(
           JSON.stringify(
             new Photo(
@@ -29,7 +29,8 @@ export const photosRouter = async (
               image.originalName,
               image.url,
               image.description,
-              image.extension
+              image.extension,
+              false
             ),
             null,
             5

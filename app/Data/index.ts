@@ -18,6 +18,7 @@ export let photosArray: Photo[] = [
     ],
     extension: "jpg",
     tags: [],
+    profilePic: null,
   },
 ];
 

@@ -10,13 +10,15 @@ export class Photo {
   history: { status: string; timestamp: number; url?: string }[];
   tags: any[];
   extension: string;
+  profilePic: Photo | null = null;
   constructor(
     id: number,
     album: string,
     originalName: string,
     url: string,
     description: string,
-    extension: string
+    extension: string,
+    profile: boolean
   ) {
     this.id = id;
     this.album = album;
@@ -29,6 +31,6 @@ export class Photo {
       ]);
     this.extension = extension;
     this.tags = [];
-    photosArray.push(this);
+    if (profile) photosArray.push(this);
   }
 }

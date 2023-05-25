@@ -1,4 +1,5 @@
 import { usersArray } from "../Data";
+import { Photo } from "./Photo";
 
 export class User {
   id: number;
@@ -6,6 +7,7 @@ export class User {
   email: string;
   confimred: boolean;
   password: string;
+  profilePic: Photo | null = null;
   constructor(
     id: number,
     name: string,

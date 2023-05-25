@@ -1,6 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { getId, getRequestData } from "../utils";
-import { tagsController } from "../Controllers";
+import { getId, getRequestData, verifyHeaderToken } from "../utils";
+import { fileController, tagsController } from "../Controllers";
+import { usersArray } from "../Data";
+import { SavedImageI } from "../types";
+import { Photo } from "../Models/Photo";
 
 export const tagsRouter = async (
   request: IncomingMessage,
@@ -10,30 +13,64 @@ export const tagsRouter = async (
   switch (request.method) {
     case "GET":
       if (request.url.match(/\/api\/profile\/([0-9]+)/)) {
-        const id = getId(request.url);
-        response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(JSON.stringify(tagsController.getTagById(id), null, 5));
-      } else if (request.url.match("api/tags")) {
-        response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(JSON.stringify(tagsController.getAll(), null, 5));
+        const res = await verifyHeaderToken(request);
+        if (res) {
+          const id = getId(request.url);
+          const user = usersArray.find((user) => user.id === id);
+          response.writeHead(200, { "Content-Type": "application/json" });
+          response.end(
+            JSON.stringify(
+              {
+                name: user?.name,
+                email: user?.email,
+                profilePic: user?.profilePic,
+              },
+              null,
+              5
+            )
+          );
+        } else {
+          response.writeHead(200, { "Content-Type": "application/json" });
+          response.end("not valid token");
+        }
+      } else if (request.url.match(/\/api\/profile\/logout\/([0-9]+)/)) {
       }
       break;
 
     case "POST":
-      if (request.url.match("api/tags")) {
-        const data = await getRequestData(request);
-        response.writeHead(200, { "Content-Type": "application/json" });
+      if (request.url.match("api/profile")) {
+        const data: any = await getRequestData(request);
 
+        const image: SavedImageI = await fileController.saveFile(request);
+        response.writeHead(200, { "content-type": "application/json" });
+        const user = usersArray.find((user) => data.id === user.id);
         response.end(
-          typeof data === "string"
-            ? JSON.stringify(tagsController.add(data), null, 5)
-            : "Wrong type of data"
+          JSON.stringify(
+            new Photo(
+              image.id,
+              image.album,
+              image.originalName,
+              image.url,
+              image.description,
+              image.extension,
+              true
+            ),
+            null,
+            5
+          )
         );
       }
       break;
     case "DELETE":
       break;
     case "PATCH":
+      if (request.url.match("api/profile")) {
+        const data: any = await getRequestData(request);
+        const user = usersArray.find((user) => data.id === user.id);
+        const res = await verifyHeaderToken(request);
+        if (res) {
+        }
+      }
       break;
     default:
       console.log("default");
