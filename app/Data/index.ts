@@ -20,6 +20,108 @@ export let photosArray: Photo[] = [
     tags: [],
     profilePic: null,
   },
+  {
+    id: 1684176920897,
+    album: "album1",
+    originalName: "input.jpg",
+    url: "./app/uploads/album1/upload_871b287c83e1286992477cfc33a1ecf2.jpg",
+    description: "basicDesc",
+    lastChagne: "original",
+    history: [
+      {
+        status: "original",
+        timestamp: 1684176920899,
+      },
+    ],
+    extension: "jpg",
+    tags: [],
+    profilePic: null,
+  },
+  {
+    id: 1684176920897,
+    album: "album1",
+    originalName: "input.jpg",
+    url: "./app/uploads/album1/upload_871b287c83e1286992477cfc33a1ecf2.jpg",
+    description: "basicDesc",
+    lastChagne: "original",
+    history: [
+      {
+        status: "original",
+        timestamp: 1684176920899,
+      },
+    ],
+    extension: "jpg",
+    tags: [],
+    profilePic: null,
+  },
+  {
+    id: 1684176920897,
+    album: "album1",
+    originalName: "input.jpg",
+    url: "./app/uploads/album1/upload_871b287c83e1286992477cfc33a1ecf2.jpg",
+    description: "basicDesc",
+    lastChagne: "original",
+    history: [
+      {
+        status: "original",
+        timestamp: 1684176920899,
+      },
+    ],
+    extension: "jpg",
+    tags: [],
+    profilePic: null,
+  },
+  {
+    id: 1684176920897,
+    album: "album1",
+    originalName: "input.jpg",
+    url: "./app/uploads/album1/upload_871b287c83e1286992477cfc33a1ecf2.jpg",
+    description: "basicDesc",
+    lastChagne: "original",
+    history: [
+      {
+        status: "original",
+        timestamp: 1684176920899,
+      },
+    ],
+    extension: "jpg",
+    tags: [],
+    profilePic: null,
+  },
+  {
+    id: 1684176920897,
+    album: "album1",
+    originalName: "input.jpg",
+    url: "./app/uploads/album1/upload_871b287c83e1286992477cfc33a1ecf2.jpg",
+    description: "basicDesc",
+    lastChagne: "original",
+    history: [
+      {
+        status: "original",
+        timestamp: 1684176920899,
+      },
+    ],
+    extension: "jpg",
+    tags: [],
+    profilePic: null,
+  },
+  {
+    id: 1684176920897,
+    album: "album1",
+    originalName: "input.jpg",
+    url: "./app/uploads/album1/upload_871b287c83e1286992477cfc33a1ecf2.jpg",
+    description: "basicDesc",
+    lastChagne: "original",
+    history: [
+      {
+        status: "original",
+        timestamp: 1684176920899,
+      },
+    ],
+    extension: "jpg",
+    tags: [],
+    profilePic: null,
+  },
 ];
 
 export const tagsArray: Tag[] = [
