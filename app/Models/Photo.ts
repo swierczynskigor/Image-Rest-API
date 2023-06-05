@@ -18,7 +18,7 @@ export class Photo {
     url: string,
     description: string,
     extension: string,
-    profile: boolean
+    profile: string | boolean
   ) {
     this.id = id;
     this.album = album;
@@ -31,6 +31,7 @@ export class Photo {
       ]);
     this.extension = extension;
     this.tags = [];
-    if (profile) photosArray.push(this);
+    if (profile === "false" || !profile) photosArray.push(this);
+    console.log(photosArray.length);
   }
 }
