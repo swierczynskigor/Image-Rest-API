@@ -26,6 +26,9 @@ export class User {
   verify() {
     this.confimred = true;
   }
+  setProfilePic(newPic: Photo) {
+    this.profilePic = newPic;
+  }
 }
 new User(
   0,

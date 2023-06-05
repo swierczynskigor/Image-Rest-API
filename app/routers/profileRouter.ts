@@ -44,21 +44,18 @@ export const tagsRouter = async (
         const image: SavedImageI = await fileController.saveFile(request);
         response.writeHead(200, { "content-type": "application/json" });
         const user = usersArray.find((user) => data.id === user.id);
-        response.end(
-          JSON.stringify(
-            new Photo(
-              image.id,
-              image.album,
-              image.originalName,
-              image.url,
-              image.description,
-              image.extension,
-              true
-            ),
-            null,
-            5
+        user?.setProfilePic(
+          new Photo(
+            image.id,
+            image.album,
+            image.originalName,
+            image.url,
+            image.description,
+            image.extension,
+            true
           )
         );
+        response.end(JSON.stringify(user, null, 5));
       }
       break;
     case "DELETE":
