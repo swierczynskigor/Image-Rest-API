@@ -19,6 +19,7 @@ export let photosArray: Photo[] = [
     extension: "jpg",
     tags: [],
     profilePic: null,
+    localization: null,
   },
   {
     id: 1684176920897,
@@ -36,6 +37,7 @@ export let photosArray: Photo[] = [
     extension: "jpg",
     tags: [],
     profilePic: null,
+    localization: null,
   },
   {
     id: 1684176920897,
@@ -53,6 +55,7 @@ export let photosArray: Photo[] = [
     extension: "jpg",
     tags: [],
     profilePic: null,
+    localization: null,
   },
   {
     id: 1684176920897,
@@ -70,6 +73,7 @@ export let photosArray: Photo[] = [
     extension: "jpg",
     tags: [],
     profilePic: null,
+    localization: null,
   },
   {
     id: 1684176920897,
@@ -87,6 +91,7 @@ export let photosArray: Photo[] = [
     extension: "jpg",
     tags: [],
     profilePic: null,
+    localization: null,
   },
   {
     id: 1684176920897,
@@ -104,6 +109,7 @@ export let photosArray: Photo[] = [
     extension: "jpg",
     tags: [],
     profilePic: null,
+    localization: null,
   },
   {
     id: 1684176920897,
@@ -121,6 +127,7 @@ export let photosArray: Photo[] = [
     extension: "jpg",
     tags: [],
     profilePic: null,
+    localization: null,
   },
 ];
 

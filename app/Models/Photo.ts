@@ -8,7 +8,7 @@ export class Photo {
   description: string;
   lastChagne: string;
   history: { status: string; timestamp: number; url?: string }[];
-  tags: any[];
+  tags: number[];
   extension: string;
   profilePic: Photo | null = null;
   localization: string | null;
