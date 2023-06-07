@@ -69,6 +69,7 @@ export const fileController = {
                 url: newPath,
                 description: fields.description ? fields.description : "",
                 extension: newFileName.split(".")[1],
+                localization: fields.localization || null,
               });
             });
           } catch (error) {

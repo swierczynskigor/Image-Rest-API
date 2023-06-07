@@ -19,6 +19,7 @@ export interface SavedImageI {
   url: string;
   description: string;
   extension: string;
+  localization: string | null;
 }
 
 export interface RegisterUsetDataI {

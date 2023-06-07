@@ -30,7 +30,8 @@ export const photosRouter = async (
               image.url,
               image.description,
               image.extension,
-              false
+              false,
+              image.localization
             ),
             null,
             5

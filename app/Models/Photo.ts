@@ -11,6 +11,7 @@ export class Photo {
   tags: any[];
   extension: string;
   profilePic: Photo | null = null;
+  localization: string | null;
   constructor(
     id: number,
     album: string,
@@ -18,7 +19,8 @@ export class Photo {
     url: string,
     description: string,
     extension: string,
-    profile: string | boolean
+    profile: string | boolean,
+    localization: string | null = null
   ) {
     this.id = id;
     this.album = album;
@@ -32,6 +34,6 @@ export class Photo {
     this.extension = extension;
     this.tags = [];
     if (profile === "false" || !profile) photosArray.push(this);
-    console.log(photosArray.length);
+    this.localization = localization;
   }
 }
