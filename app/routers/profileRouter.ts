@@ -52,7 +52,8 @@ export const tagsRouter = async (
             image.url,
             image.description,
             image.extension,
-            true
+            true,
+            []
           )
         );
         response.end(JSON.stringify(user, null, 5));

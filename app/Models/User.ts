@@ -8,6 +8,7 @@ export class User {
   confimred: boolean;
   password: string;
   profilePic: Photo | null = null;
+  showingName: string;
   constructor(
     id: number,
     name: string,
@@ -17,6 +18,7 @@ export class User {
   ) {
     this.id = id;
     this.name = name;
+    this.showingName = name;
     this.email = email;
     this.confimred = confirmed;
     this.password = password;

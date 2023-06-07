@@ -8,7 +8,7 @@ export class Photo {
   description: string;
   lastChagne: string;
   history: { status: string; timestamp: number; url?: string }[];
-  tags: number[];
+  tags: string[];
   extension: string;
   profilePic: Photo | null = null;
   localization: string | null;
@@ -20,6 +20,7 @@ export class Photo {
     description: string,
     extension: string,
     profile: string | boolean,
+    tags: string[],
     localization: string | null = null
   ) {
     this.id = id;
@@ -34,6 +35,7 @@ export class Photo {
     this.extension = extension;
     this.tags = [];
     if (profile === "false" || !profile) photosArray.push(this);
+    this.tags = tags;
     this.localization = localization;
   }
 }

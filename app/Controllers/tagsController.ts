@@ -28,7 +28,7 @@ export const tagsController = {
     else return "404";
   },
   addTagToPhoto: (id: number, tagId: number) => {
-    const tag = tagsArray.find((tag) => tag.id === tagId);
+    const tag = tagsArray.find((tag) => tag.id === tagId)?.name;
     const file = photosArray.find((file) => file.id === id);
     if (tag && file) {
       file.tags.push(tag);
@@ -36,7 +36,9 @@ export const tagsController = {
     } else return "404";
   },
   addMassTagsToPhoto: (id: number, tagsId: number[]) => {
-    const tags = tagsArray.filter((tag) => tagsId.includes(tag.id));
+    const tags = tagsArray
+      .filter((tag) => tagsId.includes(tag.id))
+      .map((tag) => tag.name);
     const file = photosArray.find((file) => file.id === id);
     console.log(tags, file);
     if (tags && file) {

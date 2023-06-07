@@ -70,6 +70,7 @@ export const fileController = {
                 description: fields.description ? fields.description : "",
                 extension: newFileName.split(".")[1],
                 localization: fields.localization || null,
+                tags: fields.tags.split(","),
               });
             });
           } catch (error) {
