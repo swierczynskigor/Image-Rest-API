@@ -10,8 +10,8 @@ export class Photo {
   history: { status: string; timestamp: number; url?: string }[];
   tags: string[];
   extension: string;
-  profilePic: Photo | null = null;
   localization: string | null;
+  profile: boolean;
   constructor(
     id: number,
     album: string,
@@ -30,12 +30,17 @@ export class Photo {
     this.description = description;
     (this.lastChagne = "original"),
       (this.history = [
-        { status: "original", timestamp: new Date().getTime() },
+        { status: "original", url: url, timestamp: new Date().getTime() },
       ]);
     this.extension = extension;
     this.tags = [];
-    if (profile === "false" || !profile) photosArray.push(this);
     this.tags = tags;
     this.localization = localization;
+    if (profile === "false" || !profile) {
+      this.profile = false;
+      photosArray.push(this);
+    } else {
+      this.profile = true;
+    }
   }
 }

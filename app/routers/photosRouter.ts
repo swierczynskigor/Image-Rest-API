@@ -1,8 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { fileController, tagsController } from "../Controllers";
+import * as fs from "fs";
 import { Photo } from "../Models/Photo";
 import { SavedImageI } from "../types";
-import { getId, getRequestData } from "../utils";
+import { getDataFromUrl, getId, getRequestData } from "../utils";
+import { photosArray } from "../Data";
 
 export const photosRouter = async (
   request: IncomingMessage,
@@ -12,7 +14,12 @@ export const photosRouter = async (
   switch (request.method) {
     case "GET":
       if (request.url.match(/\/api\/photos\/([0-9]+)/)) {
-        fileController.returFile(getId(request.url), response);
+        const id = getId(request.url);
+        const file = photosArray.find((photo) => photo.id === id);
+        if (file) fileController.returFile(file, response);
+        else response.end();
+      } else if (request.url.match(/\/api\/photos\/([0-9a-zA-Z]+)/)) {
+        fileController.getFromAlbum(getDataFromUrl(request.url), response);
       } else if (request.url === "/api/photos") {
         fileController.getAll(response);
       }

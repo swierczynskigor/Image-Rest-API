@@ -8,7 +8,7 @@ export class User {
   confimred: boolean;
   password: string;
   profilePic: Photo | null = null;
-  showingName: string;
+  public showingName: string;
   constructor(
     id: number,
     name: string,

@@ -40,7 +40,6 @@ export const tagsController = {
       .filter((tag) => tagsId.includes(tag.id))
       .map((tag) => tag.name);
     const file = photosArray.find((file) => file.id === id);
-    console.log(tags, file);
     if (tags && file) {
       file.tags = file.tags.concat([...tags]);
       return file;

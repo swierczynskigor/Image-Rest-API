@@ -4,13 +4,16 @@ import formidable from "formidable";
 import { SavedImageI } from "../types";
 import { overritePhotosArray, photosArray } from "../Data";
 import { fileOperations } from "../utils";
+import { Photo } from "../Models/Photo";
 
 export const fileController = {
-  returFile: (id: number, response: ServerResponse) => {
-    const file = photosArray.find((photo) => photo.id === id);
+  returFile: (file: Photo, response: ServerResponse) => {
     if (file) {
-      const filePath = file.url;
-      const stat = fs.statSync(filePath);
+      let path = file.url;
+      if (file.history.length > 1)
+        path = file.history[file.history.length - 1].url!;
+      console.log(path);
+      const stat = fs.statSync(path);
 
       if (file.extension === "mp4")
         response.writeHead(200, {
@@ -23,7 +26,7 @@ export const fileController = {
           "Content-Length": stat.size,
         });
 
-      fs.readFile(filePath, function (err, content) {
+      fs.readFile(path, function (err, content) {
         // Serving the image
         response.end(content);
       });
@@ -61,6 +64,8 @@ export const fileController = {
               if (err) {
                 return console.log(err);
               }
+              const extension = newFileName.split(".")[1];
+              console.log(extension);
 
               resolve({
                 id: new Date().getTime(),
@@ -68,9 +73,9 @@ export const fileController = {
                 originalName: file.name,
                 url: newPath,
                 description: fields.description ? fields.description : "",
-                extension: newFileName.split(".")[1],
+                extension,
                 localization: fields.localization || null,
-                tags: fields.tags.split(","),
+                tags: fields.tags.split(",") || [],
               });
             });
           } catch (error) {
@@ -102,10 +107,32 @@ export const fileController = {
 
     return file;
   },
+  getFromAlbum: (album: string, response: ServerResponse) => {
+    response.writeHead(200, {
+      "Content-Type": "application/json",
+    });
+    response.end(
+      JSON.stringify(
+        photosArray.filter((photo) => photo.album === album),
+        null,
+        5
+      )
+    );
+  },
   getAll: (response: ServerResponse) => {
     response.writeHead(200, {
       "Content-Type": "application/json",
     });
     response.end(JSON.stringify(photosArray, null, 5));
+  },
+  patchPhoto: (data: any) => {
+    if (!data.id) return null;
+    const photo = photosArray.find((item) => {
+      return item.id == parseInt(data.id);
+    });
+
+    if (!photo) return null;
+    fileOperations.patch(photo, data.content);
+    return photo.id;
   },
 };

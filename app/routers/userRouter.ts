@@ -5,7 +5,7 @@ import {
   verifyHeaderToken,
   verifyToken,
 } from "../utils";
-import { userController } from "../Controllers";
+import { fileController, userController } from "../Controllers";
 import { usersArray } from "../Data";
 
 export const usersRouter = async (
@@ -33,6 +33,15 @@ export const usersRouter = async (
           "Content-Type": "text/plain",
         });
         response.end("Confimation completed");
+      } else if (request.url.match(/\/api\/user\/confirm\/([0-9a-zA-Z]+)/)) {
+        response.writeHead(404, {
+          "Content-Type": "image/jpg",
+        });
+        const username = getDataFromUrl(request.url);
+        const user = usersArray.find((u) => u.name === username);
+        if (user?.profilePic)
+          fileController.returFile(user?.profilePic, response);
+        else response.end(null);
       } else if (request.url === "/api/user") {
         response.writeHead(200, {
           "Content-Type": "text/plain",
@@ -72,7 +81,6 @@ export const usersRouter = async (
     case "PATCH":
       break;
     default:
-      console.log("default");
       break;
   }
 };

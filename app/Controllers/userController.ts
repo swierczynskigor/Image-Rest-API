@@ -40,6 +40,7 @@ export const userController = {
                   token: await createToken(user),
                   name: user.name,
                   success: true,
+                  showingName: user.showingName,
                 }
               : "confirm your account"
           );

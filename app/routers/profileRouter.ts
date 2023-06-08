@@ -1,49 +1,34 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { getId, getRequestData, verifyHeaderToken } from "../utils";
-import { fileController, tagsController } from "../Controllers";
+import { getDataFromUrl, getRequestData, verifyHeaderToken } from "../utils";
+import { fileController } from "../Controllers";
 import { usersArray } from "../Data";
 import { SavedImageI } from "../types";
 import { Photo } from "../Models/Photo";
 
-export const tagsRouter = async (
+export const profileRouter = async (
   request: IncomingMessage,
   response: ServerResponse
 ) => {
   if (request.url === undefined) return;
+  console.log(request.url);
   switch (request.method) {
     case "GET":
-      if (request.url.match(/\/api\/profile\/([0-9]+)/)) {
-        const res = await verifyHeaderToken(request);
-        if (res) {
-          const id = getId(request.url);
-          const user = usersArray.find((user) => user.id === id);
-          response.writeHead(200, { "Content-Type": "application/json" });
-          response.end(
-            JSON.stringify(
-              {
-                name: user?.name,
-                email: user?.email,
-                profilePic: user?.profilePic,
-              },
-              null,
-              5
-            )
-          );
-        } else {
-          response.writeHead(200, { "Content-Type": "application/json" });
-          response.end("not valid token");
-        }
+      if (request.url.match(/\/api\/profile\/([0-9a-zA-Z]+)/)) {
+        const id = getDataFromUrl(request.url);
+        const user = usersArray.find((user) => user.name === id);
+        if (user?.profilePic)
+          fileController.returFile(user?.profilePic, response);
+        else response.end(null);
       } else if (request.url.match(/\/api\/profile\/logout\/([0-9]+)/)) {
       }
       break;
 
     case "POST":
       if (request.url.match("api/profile")) {
-        const data: any = await getRequestData(request);
-
+        console.log("XDDDDD");
         const image: SavedImageI = await fileController.saveFile(request);
         response.writeHead(200, { "content-type": "application/json" });
-        const user = usersArray.find((user) => data.id === user.id);
+        const user = usersArray.find((user) => image.album === user.name);
         user?.setProfilePic(
           new Photo(
             image.id,
@@ -56,6 +41,7 @@ export const tagsRouter = async (
             []
           )
         );
+        console.log(user);
         response.end(JSON.stringify(user, null, 5));
       }
       break;
@@ -66,12 +52,12 @@ export const tagsRouter = async (
         const data: any = await getRequestData(request);
         const user = usersArray.find((user) => data.id === user.id);
         const res = await verifyHeaderToken(request);
-        if (res) {
+        if (res && user) {
+          user!.showingName = data.name;
         }
       }
       break;
     default:
-      console.log("default");
       break;
   }
 };

@@ -12,6 +12,9 @@ content-type: application/json
 GET http://localhost:5000/api/photos HTTP/1.1
 
 ### GET - pobierz jeden element wg id
+GET http://localhost:5000/api/photos/name HTTP/1.1
+
+### GET - pobierz jeden element wg id
 GET http://localhost:5000/api/photos/1685373561959 HTTP/1.1
 
 
@@ -49,3 +52,15 @@ Content-Type: text/plain
 
 basicDesc
 ------FormBoundary1234
+
+#####
+PATCH http://localhost:5000/api/filters
+
+{
+  "id": 1684176920897,
+  "url":"./app/uploads/album1/upload_871b287c83e1286992477cfc33a1ecf2.jpg",
+  "type": "grayscale",
+  "params": null
+}
+
+####
