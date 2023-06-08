@@ -50,11 +50,12 @@ export const profileRouter = async (
     case "PATCH":
       if (request.url.match("api/profile")) {
         const data: any = await getRequestData(request);
-        const user = usersArray.find((user) => data.id === user.id);
-        const res = await verifyHeaderToken(request);
-        if (res && user) {
-          user!.showingName = data.name;
+        const user = usersArray.find((user) => data.name === user.name);
+        if (user) {
+          user!.showingName = data.newName;
         }
+        response.writeHead(200, { "content-type": "application/json" });
+        response.end(JSON.stringify(user, null, 5));
       }
       break;
     default:

@@ -75,7 +75,7 @@ export const fileController = {
                 description: fields.description ? fields.description : "",
                 extension,
                 localization: fields.localization || null,
-                tags: fields.tags.split(",") || [],
+                tags: fields.tags ? fields.tags.split(",") : [],
               });
             });
           } catch (error) {
