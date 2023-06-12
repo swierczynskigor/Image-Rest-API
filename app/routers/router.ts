@@ -10,7 +10,6 @@ export const router = async (
   response: ServerResponse
 ) => {
   // images router
-  console.log(request.url);
   if (request.url && request.url.search("/api/photos") != -1) {
     await photosRouter(request, response);
   } else if (request.url && request.url.search("/api/filters") != -1) {
